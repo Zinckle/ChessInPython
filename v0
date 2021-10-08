@@ -1,0 +1,38 @@
+from tkinter import *
+
+class Piece:
+    colour = "" ##b for black, w for white
+    title = ""  ## Pawn, King, Queen, Rook, Bishop, Knighet
+    image = "" #assign the image for the respective piece
+    xpos = "" ##position in the x axis
+    ypos = "" ##position in the y axis
+
+    def __init__(self, c, t, i):
+        self.colour = c   
+        self.title = t
+        self.image = i
+
+    def setX(self, x):
+        self.xpos = x   
+
+    def setX(self, y):
+        self.ypos = y   
+
+class Square:
+    colour = "" ## black or white square
+    xpos = "" ##position in the x axis
+    ypos = "" ##position in the y axis
+    currentPiece = "" ##what peice is in this position
+
+
+
+def main():
+    print ("hi")
+    wp = Piece("w", "p", "heres where the image goes")
+    print (wp.title)
+
+    w, h = 8, 5
+    board = [[0 for x in range(w)] for y in range(h)]
+
+
+main()
