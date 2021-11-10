@@ -86,57 +86,97 @@ def pawnCheck(board, x1, y1, x2, y2):
         inital = 6
         if (y1<y2):
             return False
-
     elif (pawn.colour == "b"): 
         indicator = 1
         inital = 1
         if (y1>y2):
             return False
 
-    if((y1 == inital) and (y2 == y1+indicator*2) and (x1 == x2) and (board[x1][y1+indicator].currentPiece == "")):
+    if((y1 == inital) and (y2 == y1+indicator*2) and (x1 == x2) and (board[x1][y1+indicator].currentPiece == "") and (board[x2][y2].currentPiece == "")):
+        print("1")
         return True
 
-    elif((y2 == y1+indicator) and (x1 == x2)):
+    elif((y2 == y1+indicator) and (x1 == x2) and (board[x2][y2].currentPiece == "")):
+        print("2")
         return True
 
     try:
-        if((board[x1+1][y1+indicator].currentPiece != "")):
+        if((board[x1+1][y1+indicator].currentPiece != "") and (x1+1 == x2) and (y1+indicator == y2)):
+            print("3")
             return True
+    except:
+        print()
 
-    except:
-        print()
     try:
-        if((board[x1-1][y1+indicator].currentPiece != "")):
-            return True
-            
+        if((board[x1-1][y1+indicator].currentPiece != ""and (x1-1 == x2) and (y1+indicator == y2))):
+            print("4")
+            return True 
     except:
         print()
-    # elif(try(board[x1+1][y1+indicator].currentPiece != ""))):
-    #     print("3")
-    #     return True
-    # elif(board[x1-1][y1+indicator].currentPiece != ""):
-    #     print("4")
-    #     return True
+
     return False
 
-
-
 def rookCheck(board, x1, y1, x2, y2):
-    return "rook"
+    #TODO: allow for castling with the king
+    if(bool(x1 == x2) != bool(y1 == y2)):
+        if (x1 > x2):
+            i = x2
+            j = x1
+            print("1")
+        elif (x1 < x2):
+            i = x1
+            j = x2
+            print("2")
+        elif (y1 > y2):
+            i = y2
+            j = y1
+            print("3")
+        elif (y1 < y2):
+            i = y1
+            j = y2
+            print("4")
+        print(i,j)
+        for check in range(i+1,j):   
+            if ((x1 > x2) or (x1 < x2)):
+                if (board[check][y1].currentPiece != ""):
+                    return False
+            elif ((y1 > y2) or (y1 < y2)):
+                if (board[x1][check].currentPiece != ""):
+                    return False
+            print(check)
+        return True
+
+    return False
+
 def knightCheck(board, x1, y1, x2, y2):
-    return "knight"
+    if(abs(x1-x2)==2 and ((y2 == y1-1)or(y2 == y1+1))):
+        return True
+    elif(abs(y1-y2)==2 and ((x2 == x1-1)or(x2 == x1+1))):
+        return True
+    return False
+    
 def bishopCheck(board, x1, y1, x2, y2):
-    return "bishop"
+    if (abs(x1-x2) == abs(y1-y2)):
+        xInd = int(x2-x1)/abs(x1-x2)
+        yInd = int(y2-y1)/abs(y1-y2)
+
+        distance = abs(x1-x2)
+        print(xInd, yInd, distance)
+        for i in range(1, distance):
+            print(x1+(xInd*i))
+            print(y1+(yInd*i))
+            if (board[int(x1+(xInd*i))][int(y1+(yInd*i))].currentPiece != ""):
+                return False
+        return True
+    return False
+
 def queenCheck(board, x1, y1, x2, y2):
-    return "queen"
+    return (pawnCheck(board, x1, y1, x2, y2) or rookCheck(board, x1, y1, x2, y2) or bishopCheck(board, x1, y1, x2, y2) or kingCheck(board, x1, y1, x2, y2))
+
 def kingCheck(board, x1, y1, x2, y2):
-    return "king"
-##def
-
-
-    #elif ((pawn.colour == "b") and  (pawn.ypos == 150)):
-
-
+    if (((x1 == x2) or (x1-1 == x2) or (x1+1 == x2)) and ((y1 == y2) or (y1-1 == y2) or (y1+1 == y2))):
+        return True
+    return False
 
 
 
