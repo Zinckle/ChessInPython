@@ -1,4 +1,4 @@
-
+#TODO: dsplay the valid moves availible for a given peice
 from graphics import *
 
 class Piece:
